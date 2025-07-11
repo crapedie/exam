@@ -80,6 +80,23 @@
       max-width: 500px;
       display: none;
     }
+    #playTip {
+      display: none;
+      margin: 16px 0;
+    }
+    #playTip button {
+      font-size: 1em;
+      padding: 8px 24px;
+      border: none;
+      border-radius: 6px;
+      background: #d7263d;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    #playTip button:hover {
+      background: #b81e2e;
+    }
     @media (max-width: 600px) {
       .text {
         font-size: clamp(1.1rem, 5vw, 1.5rem);
@@ -114,7 +131,10 @@
       火鸡面🫵🏻‼️爱到疯癫❤️‍🔥❤️‍🔥每一口都是刺激冒险🎢⛷️面条筋道它不断线😱😱🙌🏻辣味在嘴里炸开了天🫦🫦我爱火鸡面赛过神仙🎙️‼️‼️是它让我快乐似活神仙🥵
     </div>
     <img src="exam.jpg" alt="火鸡面图片">
-    <audio id="myAudio" src="audio.m4a" loop></audio>
+    <div id="playTip">
+      <button onclick="manualPlay()">如未自动播放，请点此播放音频</button>
+    </div>
+    <audio id="myAudio" src="audio.m4a"></audio>
   </div>
   <script>
     document.getElementById('confirmBtn').onclick = function() {
@@ -122,12 +142,21 @@
       document.getElementById('mainContent').style.display = 'block';
       var audio = document.getElementById('myAudio');
       audio.currentTime = 3;
-      audio.play();
+      audio.load();
+      audio.play().catch(function(e){
+        document.getElementById('playTip').style.display = 'block';
+      });
       audio.onended = function() {
         audio.currentTime = 3;
         audio.play();
       };
     };
+    function manualPlay() {
+      var audio = document.getElementById('myAudio');
+      audio.currentTime = 3;
+      audio.play();
+      document.getElementById('playTip').style.display = 'none';
+    }
   </script>
 </body>
 </html> 
